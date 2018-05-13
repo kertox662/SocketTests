@@ -3,6 +3,7 @@ from tkinter import *
 import threading
 from queue import Queue
 from time import sleep
+import atexit
 
 users = ["Users:"]
 dUsers = []
@@ -15,6 +16,11 @@ displayMsg = []
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 connected = False
+
+def exitFunc():
+    s.close()
+
+atexit.register(exitFunc)
 
 def getName(Event):
     askName.destroy()
@@ -85,14 +91,18 @@ def recvLoop():
         if not data:
             break
         msg = data.decode('utf-8')
+        print(msg)
         if msg.startswith("|Users|"):
             global users
             userList = msg.split("|Users|")
             print(userList[1])
-            users = eval(userList[1])
+            newUList = eval(userList[1])
+            if len(newUList) > len(users):
+                queueMsg.append("{} has connected".format(newUList[-1]))
+            users = newUList
             print(users)
             print("Got new user list")
-            queueMsg.append("{} has connected".format(users[-1]))
+            
         else:
             queueMsg.append(msg)
 

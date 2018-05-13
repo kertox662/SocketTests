@@ -49,6 +49,7 @@ def clientHandler(conn,addr):
         if data.startswith("|User|"):
             global names
             username = data.split("|User|")[1]
+            print(username)
             names.append(username)
             data = "|Users|{}".format(names)
         #data.pop(-1)
@@ -56,11 +57,15 @@ def clientHandler(conn,addr):
 
         #data = "Server Message: {}\n".format(data)
         
-        conn.sendall(data.encode())
-    s.sendall("{} has disconnected".format(username).encode())
+        for c in connections:
+            c.sendall(data.encode())
+    
     conn.close()
     print("Disconnected from client.\nIP:{}, Port:{}".format(addr[0], addr[1]))
     names.remove(username)
+    for c in connections:
+        c.sendall("{} has disconnected".format(username).encode())
+        c.sendall("|Users|{}".format(names).encode())
 
 
 while True:
