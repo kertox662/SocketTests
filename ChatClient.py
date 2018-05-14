@@ -4,7 +4,7 @@ import threading
 from queue import Queue
 from time import sleep
 import atexit
-print("Start")
+print("Initializing Chat Client")
 users = ["Users:"]
 dUsers = []
 
@@ -40,6 +40,7 @@ def askForName():
     askName.bind("<Return>", getName)
     askName.mainloop()
 
+print("Attempting Connection")
 while not connected:
     try:
         hostName = "misha.melnyk.family"
@@ -49,7 +50,7 @@ while not connected:
     except socket.error:
         print("Failed Connection")
 
-print("Here")
+print("Successfully Connected")
 askForName()
 nameSend = "|User|{}".format(screenName)
 s.send(nameSend.encode())
