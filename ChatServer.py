@@ -58,7 +58,10 @@ def clientHandler(conn,addr):
         #data = "Server Message: {}\n".format(data)
         
         for c in connections:
-            c.sendall(data.encode())
+            try:
+                c.sendall(data.encode())
+            except:
+                print("Lost Packet")
     
     conn.close()
     print("Disconnected from client.\nIP:{}, Port:{}".format(addr[0], addr[1]))
