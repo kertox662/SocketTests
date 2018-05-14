@@ -4,7 +4,7 @@ import threading
 from queue import Queue
 from time import sleep
 import atexit
-
+print("Start")
 users = ["Users:"]
 dUsers = []
 
@@ -42,11 +42,14 @@ def askForName():
 
 while not connected:
     try:
-        s.connect(("127.0.0.1",4545))
+        hostName = "misha.melnyk.family"
+        hostIP = socket.gethostbyname(hostName)
+        s.connect((hostIP,4545))
         connected = True
     except socket.error:
-        pass
+        print("Failed Connection")
 
+print("Here")
 askForName()
 nameSend = "|User|{}".format(screenName)
 s.send(nameSend.encode())
