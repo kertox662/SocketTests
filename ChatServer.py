@@ -30,7 +30,7 @@ s.bind((host, port))
 
 print("Socket Bound")
 
-s.listen(5)
+s.listen(15)
 
 print("Socket is Listening")
 
