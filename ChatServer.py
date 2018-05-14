@@ -64,10 +64,10 @@ def clientHandler(conn,addr):
             except:
                 print("Lost Packet to", c)
     
+    connections.remove(conn)
     conn.close()
     print("Disconnected from client.\nIP:{}, Port:{}".format(addr[0], addr[1]))
     names.remove(username)
-    connections.remove(conn)
     for c in connections:
         c.sendall("{} has disconnected".format(username).encode())
         c.sendall("|Users|{}".format(names).encode())
