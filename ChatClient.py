@@ -63,7 +63,7 @@ cv.pack()
 cv.create_rectangle(100,150, w - 100, h, fill = 'white')
 cv.update()
 
-maxMessages = 10
+maxMessages = 30
 
 def displayTexts():
     while True:
@@ -78,7 +78,7 @@ def displayTexts():
             cv.delete(i)
         
         if len(queueMsg) >= maxMessages:
-            msgToDisplay = queueMsg[-10:]
+            msgToDisplay = queueMsg[maxMessages*-1:]
         else:
             msgToDisplay = queueMsg.copy()
         msgToDisplay.reverse()
