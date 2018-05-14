@@ -42,7 +42,8 @@ def clientHandler(conn,addr):
         if not data:
             break
         try:
-            data = data.decode('utf-8')#.split("\n")
+            data = data.decode('utf-8').split("")
+            data = "".join(data)
         except:
             break
         print(data)
@@ -61,7 +62,7 @@ def clientHandler(conn,addr):
             try:
                 c.sendall(data.encode())
             except:
-                print("Lost Packet")
+                print("Lost Packet to", c)
     
     conn.close()
     print("Disconnected from client.\nIP:{}, Port:{}".format(addr[0], addr[1]))
